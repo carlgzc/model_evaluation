@@ -1,0 +1,94 @@
+# config.yaml
+# 统一管理所有配置项
+
+# 模型相关配置
+models:
+  # 支持评估多个本地小模型，将它们配置为一个列表
+  ollama_models:
+    - model_name: "gemma3:270m"
+      base_url: "http://192.168.0.63:11434"
+      options:
+        temperature: 0.5
+        top_p: 0.5
+    - model_name: "deepseek-r1:8b"
+      base_url: "http://192.168.0.63:11434"
+      options:
+        temperature: 0.5
+        top_p: 0.5
+    - model_name: "gemma3:1b"
+      base_url: "http://192.168.0.63:11434"
+      options:
+        temperature: 0.5
+        top_p: 0.5
+    - model_name: "gemma3:4b"
+      base_url: "http://192.168.0.63:11434"
+      options:
+        temperature: 0.5
+        top_p: 0.5
+    - model_name: "gemma3:12b"
+      base_url: "http://192.168.0.63:11434"
+      options:
+        temperature: 0.5
+        top_p: 0.5
+    - model_name: "gemma3n:e2b"
+      base_url: "http://192.168.0.63:11434"
+      options:
+        temperature: 0.5
+        top_p: 0.5
+    - model_name: "gemma3n:e4b"
+      base_url: "http://192.168.0.63:11434"
+      options:
+        temperature: 0.5
+        top_p: 0.5
+    - model_name: "qwen3:0.6b"
+      base_url: "http://192.168.0.63:11434"
+      options:
+        temperature: 0.5
+        top_p: 0.5
+    - model_name: "qwen3:1.7b"
+      base_url: "http://192.168.0.63:11434"
+      options:
+        temperature: 0.5
+        top_p: 0.5
+
+  # 用于评估的在线大模型
+# 用于评估的在线大模型
+  online_evaluator:
+    # 在这里切换评估服务提供商: "bytedance" 或 "openai"
+    provider: "openai" # Make sure this is set to openai as you are using GPT
+    
+    # 豆包 (ByteDance) 的配置
+    bytedance:
+      model_name: "ep-20250723012811-t6nw5"
+      base_url: "https://ark-cn-beijing.bytedance.net/api/v3"
+      api_key_env: "ARK_API_KEY"
+      # Temperatures for ByteDance model
+      evaluation_temperature: 0.0
+      summary_temperature: 0.5
+
+    # OpenAI 的配置
+    openai:
+      model_name: "gpt-5-mini"
+      base_url: null 
+      api_key_env: "OPENAI_API_KEY"
+      # Temperatures for OpenAI model (based on your error)
+      evaluation_temperature: 1.0 # <<< SET THIS TO 1.0 AS REQUIRED BY THE ERROR
+      summary_temperature: 1.0 # You can adjust this for the summary
+
+
+# 文件路径配置
+paths:
+  # 支持 .csv 和 .jsonl 文件。
+  question_bank: "./data/questions.csv"
+  results_dir: "./results"
+
+# 评估流程配置
+evaluation:
+  task_name: "multi_model_test" 
+  max_workers: 10
+  # 可选值: "default", "strict_code_reviewer"
+  prompt_persona: "default"
+
+# (可选) 版本对比配置
+comparison:
+  previous_run_dir: ""
